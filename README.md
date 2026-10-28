@@ -1,45 +1,55 @@
-# Jenkins CI-CD
+# Git-Workflow
 
-A hands-on repo to learn Jenkins CI/CD from scratch.
+A hands-on repo to learn Git workflow from scratch.
 
 ## What's Inside
 
-This repo contains a **Flask web app** with a full **CI/CD + DevSecOps pipeline** built entirely on Jenkins
+This repo contains a **Flask web app** with git workflow
 
 ```
+git-commands.md         → Useful commands to work with git 
 app.py                  → Flask app (source code)
 Dockerfile              → Container image definition
 docker-compose.yml      → Production deployment config
 templates/index.html    → App frontend
 requirements.txt        → Python dependencies (flask, flake8, bandit, gunicorn, pytest)
 test_app.py             → Route tests (pytest)
-Jenkinsfile             → Pipeline config
+  
 ```
 
-###  DevSecOps Pipeline
+###  Key Features
 
-A production-grade security pipeline. Triggered on push to `main`.
+1. `main` stable branch
+2. `dev` integration branch
+3. Task specific `feature/*` barnch
+4. .gitignoore
+5. Pull request based merging
+6. Git release tagging
+7. Markdown documentation
 
+
+###  Git Branching Strategy
 ```
-push to main
-    ├── Code Quality ──── flake8 + bandit SAST (matrix: 3.11–3.13)
-    ├── Dependency Scan ─ pip-audit (package CVEs)
-    ├── Docker Lint ───── Trivy scan (Dockerfile best practices)
-    ├── Sonarqube scan ───── SAST
-    └── Tests ─────────── pytest (route tests)
-    └── Deploy to Server ───── docker compose up
+feature/* or fix/*
+      ↓
+ pull request
+      ↓
+     dev
+      ↓
+  pull request       
+      ↓
+     main
 ```
+Branch Types with purpose
 
-| # | Stages | What It Does |
+| # | Branch | What It Does |
 |---|---------|-----------------|
-| * | [DevSecOps Pipeline]
-| 1 | [Dependency Scan], `pip-audit`, vulnerability databases | Audits Python packages for known CVEs |
-| 2 | [Docker Lint] | Validates Dockerfile against best practices |
-| 3 | [Sonarqube scan] | SAST for code |
-| 4 | [Tests] `pytest`, Flask test client | Runs pytest against Flask routes (/, /health) |
-| 5 | [Deploy to Server] | Runs docker-compose, deploys the app |
+| 1 | main | stable and release ready project content |
+| 2 | dev | Integration branch acts as a staging point before main|
+| 3 | feature/* | Focuses on specific task|
+| 4 | fix/* | hotfixes maintenance work |
 
 
-The successful deployment on push to main branch is as below
+The log onelines as below
 
 ![snapshot](images/1.jpeg)
